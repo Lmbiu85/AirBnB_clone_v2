@@ -1,16 +1,14 @@
---This script prepares a MySQL server for the project
+-- Creates a MySQL server with:
+--   Database hbnb_test_db.
+--   User hbnb_test with password hbnb_test_pwd in localhost.
+--   Grants all privileges for hbnb_test on hbnb_test_db.
+--   Grants SELECT privilege for hbnb_test on performance_schema.
 
 
--- Check if the database hbnb_test_db exists
-SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'hbnb_test_db';
-
--- If the database doesn't exist, create it
+-- Create the database if it doesn't exist
 CREATE DATABASE IF NOT EXISTS hbnb_test_db;
 
--- Check if the user hbnb_test exists
-SELECT User FROM mysql.user WHERE User = 'hbnb_test' AND Host = 'localhost';
-
--- If the user doesn't exist, create it and grant privileges
+-- Create the user if it doesn't exist
 CREATE USER IF NOT EXISTS 'hbnb_test'@'localhost' IDENTIFIED BY 'hbnb_test_pwd';
 
 -- Grant all privileges on hbnb_test_db to hbnb_test
@@ -18,3 +16,6 @@ GRANT ALL PRIVILEGES ON hbnb_test_db.* TO 'hbnb_test'@'localhost';
 
 -- Grant SELECT privilege on performance_schema to hbnb_test
 GRANT SELECT ON performance_schema.* TO 'hbnb_test'@'localhost';
+
+-- Flush privileges to apply changes
+FLUSH PRIVILEGES;
